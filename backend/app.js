@@ -31,6 +31,7 @@ mongoose
 app.use(express.json())
 
 app.use(hpp())
+app.use("/images", express.static(path.join(__dirname, "images")))
 app.use(helmet())
 
 //Authorise les accès de toutes les origines (port de connexion), certains en-tête, et les verbes-serveur qui seront utilisables.
@@ -52,10 +53,9 @@ const limiter = rateLimit({
   max: 100, //100 requête par IP par tranche de 10 minutes. 10 requêtes / min.
 })
 
-app.use(limiter)
-
 //Défini le dossier "images" pour enregistrer toutes les images uploadées par les user
-app.use("/images", express.static(path.join(__dirname, "images")))
+
+app.use(limiter)
 
 //Défini les routes
 app.use("/api/sauces", sauceRoutes)

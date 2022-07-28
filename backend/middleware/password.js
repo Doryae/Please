@@ -1,3 +1,6 @@
+//Plugin permettant de sécuriser un peu plus les MDP des utilisateurs, même si ils parviennet à éviter les
+//sécurités mises en place sur le front-end. C'est une "sécurité" de plus, coté backend.
+
 const passwordValidator = require("password-validator")
 
 // Création d'un schéma de mot de passe
@@ -38,11 +41,9 @@ module.exports = (req, res, next) => {
   if (securePassword.validate(req.body.password)) {
     next()
   } else {
-    return res
-      .status(400)
-      .json({
-        error:
-          "Le mot de passe à besoin d'une Majusucle, d'une minuscule, d'un chiffre & être compris entre 6 et 15 signes.",
-      })
+    return res.status(400).json({
+      error:
+        "Le mot de passe à besoin d'une Majusucle, d'une minuscule, d'un chiffre & être compris entre 6 et 15 signes.",
+    })
   }
 }
